@@ -1,0 +1,12 @@
+[submodule "project_manager"]
+	path = project_manager
+	url = https://github.com/Squidtoon99/tiny-fs-manager
+[submodule "web"]
+	path = web
+	url = https://github.com/Squidtoon99/RemoteIDE-Web
+[submodule "ide-manager"]
+	path = ide-manager
+	url = https://github.com/Squidtoon99/ide-manager
+[submodule "history"]
+	path = history
+	url = https://github.com/Squidtoon99/remote-history
