@@ -1,0 +1,9 @@
+secret.yml
+.env.*
+.env
+node_modules
+.idea
+.next
+.vscode
+kubeconfig.yml
+kubeconfig-1.yml

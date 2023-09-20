@@ -1,0 +1,63 @@
+#file: noinspection SpellCheckingInspection,SpellCheckingInspection
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: next-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: next-app
+  template:
+    metadata:
+      labels:
+        app: next-app
+    spec:
+      containers:
+      - name: next-app
+        image: squidtoon99/ide-web:1.0-beta
+        imagePullPolicy: Always # Change when you're done testing
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: production
+        - name: NEXT_PUBLIC_HOST
+          value: https://code.squid.pink
+        envFrom:
+        - secretRef:
+            name: creds
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "75m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: next-app
+spec:
+  selector:
+    app: next-app
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: next-app
+spec:
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: PathPrefix(`/`)
+    priority: -1
+    services:
+    - name: next-app
+      port: 3000
